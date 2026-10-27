@@ -177,3 +177,87 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Lab 2 - Book Management */
+
+.lab2-form {
+  display: grid;
+  gap: 16px;
+  max-width: 650px;
+  padding: 25px;
+  margin: 30px 0;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+}
+
+.lab2-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.lab2-field input {
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  color: #1e293b;
+  background: white;
+}
+
+.lab2-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lab2-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+.lab2-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.lab2-secondary {
+  background: #475569;
+}
+
+.lab2-danger {
+  background: #dc2626;
+}
+
+.lab2-table-wrapper {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.lab2-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.lab2-table th,
+.lab2-table td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #e2e8f0;
+}
+
+.lab2-error {
+  color: #dc2626;
+}
+
+.lab2-success {
+  color: #15803d;
+}
+
+

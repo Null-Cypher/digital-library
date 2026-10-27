@@ -13,6 +13,7 @@ export default function Header() {
           <Link href="/books">Kho sách</Link>
           <Link href="/articles">Bài báo</Link>
           <Link href="/about-us">Giới thiệu</Link>
+          <Link href="/lab2">Quản lý sách</Link>
         </nav>
       </div>
     </header>

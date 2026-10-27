@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# ASP.NET Core
+**/bin/
+**/obj/
+**/.vs/
+**/TestResults/
+*.user
+*.suo
+
+# Local SQL Server configuration
+/backend/appsettings.Development.json
+/backend/appsettings.*.local.json
