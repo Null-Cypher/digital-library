@@ -11,5 +11,19 @@ public class AppDbContext : DbContext
     {
     }
 
+    // Lab 2 - Book Management
     public DbSet<Book> Books => Set<Book>();
+
+    // Lab 3 - User Authentication
+    public DbSet<AppUser> Users => Set<AppUser>();
+
+    protected override void OnModelCreating(
+        ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<AppUser>()
+            .HasIndex(u => u.NormalizedEmail)
+            .IsUnique();
+    }
 }

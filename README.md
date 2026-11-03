@@ -186,3 +186,160 @@ access SQL Server running on localhost.
 ```
 
 ```
+
+---
+
+# Lab 3 — User Registration and Authentication
+
+## 1. Overview
+
+Lab 3 extends OpenShelf by implementing a complete
+user registration and login workflow.
+
+The system combines the Next.js frontend from Lab 1
+and the ASP.NET Core Web API with SQL Server from Lab 2.
+
+## 2. Technologies
+
+- Next.js 16, React, TypeScript
+- React Context API
+- Browser localStorage
+- Axios
+- ASP.NET Core 10 Web API
+- Entity Framework Core 10
+- SQL Server 2019
+- ASP.NET Core Cookie Authentication
+
+## 3. Main Features
+
+### User Registration
+
+- Register with email and password.
+- Validate email format and password length.
+- Confirm password on the frontend.
+- Prevent duplicate email registration.
+- Hash passwords before saving them to SQL Server.
+
+### User Login
+
+- Look up registered users in the database.
+- Verify passwords using ASP.NET Core PasswordHasher.
+- Create an authentication session using an HttpOnly cookie.
+- Return the authenticated user's ID and email.
+
+### Authentication State Management
+
+- Use React Context to manage the current user.
+- Store non-sensitive user information in localStorage.
+- Restore authentication state through the `/api/auth/me` endpoint.
+- Display user information in the navigation bar.
+- Support logout and session cleanup.
+
+Passwords and authentication tokens are not stored
+in localStorage.
+
+## 4. Authentication API Endpoints
+
+| Method | Endpoint           | Description                       |
+| ------ | ------------------ | --------------------------------- |
+| POST   | /api/auth/register | Register a new user               |
+| POST   | /api/auth/login    | Authenticate and create a session |
+| GET    | /api/auth/me       | Get the authenticated user        |
+| POST   | /api/auth/logout   | End the authentication session    |
+
+## 5. Database
+
+Lab 3 uses the existing `OpenShelfLab2` database.
+
+The `Users` table contains:
+
+- Id
+- Email
+- NormalizedEmail
+- PasswordHash
+- CreatedAtUtc
+
+Migration: `AddUsersForLab03`
+
+A unique index on `NormalizedEmail` prevents
+duplicate accounts.
+
+## 6. Run the Application
+
+### Backend
+
+Requirements:
+
+- .NET SDK 10
+- SQL Server 2019 or a compatible version
+- EF Core CLI
+
+Configure the `DefaultConnection` connection string
+for the local SQL Server instance.
+
+From the `backend` directory:
+
+```powershell
+dotnet ef database update
+$env:ASPNETCORE_ENVIRONMENT = "Development"
+dotnet run --no-launch-profile --urls "http://localhost:5080"
+```
+
+### Frontend
+
+From the repository root:
+
+```powershell
+npm ci
+```
+
+Create a `.env.local` file:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5080
+```
+
+Then run:
+
+```powershell
+npm run dev
+```
+
+Open the following URLs:
+
+- Home: http://localhost:3000
+- Register: http://localhost:3000/register
+- Login: http://localhost:3000/login
+
+Use `localhost`, not a LAN IP address, for both
+frontend and API during local authentication testing.
+
+## 7. Testing
+
+The following cases were tested locally:
+
+- Successful user registration.
+- Duplicate email rejection (HTTP 409).
+- Invalid registration input (HTTP 400).
+- Successful login with registered credentials.
+- User lookup and password verification.
+- Authenticated requests using cookies.
+- Persistent authentication after page reload.
+- User information stored in React Context and localStorage.
+- Successful logout and session cleanup.
+- Unauthorized access after logout (HTTP 401).
+
+Database records were verified using SQL Server
+Management Studio.
+
+## 8. Security Notes
+
+- Passwords are stored as hashes.
+- Authentication uses HttpOnly cookies.
+- localStorage contains only non-sensitive user information.
+- The backend validates incoming registration data.
+- Local development uses HTTP.
+
+Production deployment requires HTTPS, Secure cookies,
+CSRF protection, login rate limiting, and remediation
+of any vulnerable dependencies.
